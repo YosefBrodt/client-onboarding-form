@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Onboarding — ScreenSite Agency</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0c0c0f;
+      color: #d4d4d8;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .top-bar {
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6, #a78bfa);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .header { margin-bottom: 48px; }
+
+    .header h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .header h1 span {
+      background: linear-gradient(135deg, #818cf8, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: #71717a;
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    .progress-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: rgba(99, 102, 241, 0.06);
+      border: 1px solid rgba(99, 102, 241, 0.12);
+      border-radius: 10px;
+      font-size: 13px;
+      color: #a1a1aa;
+    }
+
+    .progress-hint svg {
+      flex-shrink: 0;
+      color: #818cf8;
+    }
+
+    /* ─── Sections ─── */
+    .section {
+      margin-bottom: 32px;
+      padding: 28px 28px 32px;
+      background: #14141a;
+      border: 1px solid #1e1e28;
+      border-radius: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .section:hover { border-color: #2a2a38; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1e1e28;
+    }
+
+    .section-number {
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #f4f4f5;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: #52525b;
+      margin-top: -16px;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    /* ─── Fields ─── */
+    .field { margin-bottom: 20px; }
+    .field:last-child { margin-bottom: 0; }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #d4d4d8;
+      margin-bottom: 6px;
+    }
+
+    label .required { color: #f472b6; margin-left: 2px; }
+
+    label .hint {
+      font-weight: 400;
+      color: #52525b;
+      font-size: 12px;
+      display: block;
+      margin-top: 3px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: #0c0c0f;
+      border: 1px solid #27272f;
+      border-radius: 10px;
+      color: #e4e4e7;
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    textarea { min-height: 72px; resize: vertical; }
+    ::placeholder { color: #3f3f46; }
+
+    /* ─── Checkboxes & Radios ─── */
+    .checkbox-group, .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .checkbox-group.horizontal, .radio-group.horizontal {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .checkbox-item, .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .checkbox-item input, .radio-item input {
+      width: 16px;
+      height: 16px;
+      accent-color: #818cf8;
+      cursor: pointer;
+    }
+
+    .checkbox-item span, .radio-item span {
+      font-size: 14px;
+      color: #a1a1aa;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .field-row { grid-template-columns: 1fr; }
+      .container { padding: 40px 16px 60px; }
+      .section { padding: 20px; }
+    }
+
+    .divider {
+      height: 1px;
+      background: #1e1e28;
+      margin: 20px 0;
+    }
+
+    /* ─── Conditional / nested blocks ─── */
+    .conditional-section {
+      margin-top: 16px;
+      padding: 18px;
+      background: rgba(99, 102, 241, 0.03);
+      border: 1px solid rgba(99, 102, 241, 0.08);
+      border-radius: 10px;
+    }
+
+    .conditional-section .label-tag {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #818cf8;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    /* ─── Service tags (compact checkboxes) ─── */
+    .tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #18181f;
+      border: 1px solid #27272f;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .tag-item:hover {
+      border-color: #6366f1;
+      background: rgba(99, 102, 241, 0.05);
+    }
+
+    .tag-item input {
+      width: 14px;
+      height: 14px;
+      accent-color: #818cf8;
+      cursor: pointer;
+    }
+
+    .tag-item span { font-size: 13px; color: #a1a1aa; }
+
+    /* ─── Submit button ─── */
+    .submit-section {
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 48px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(99, 102, 241, 0.45);
+    }
+
+    .submit-btn:active { transform: translateY(0); }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .submit-btn .spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    .submit-btn.loading .spinner { display: block; }
+    .submit-btn.loading .btn-text { display: none; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Success / Error messages ─── */
+    .form-message {
+      display: none;
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .form-message.success {
+      display: block;
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+    }
+
+    .form-message.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+
+    /* ─── Footer ─── */
+    .footer {
+      margin-top: 48px;
+      text-align: center;
+      color: #3f3f46;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── Print ─── */
+    @media print {
+      body { background: #fff; color: #111; }
+      .top-bar { display: none; }
+      .section { border-color: #ddd; background: #fafafa; }
+      .section-number { background: #4f46e5; }
+      input, textarea { border-color: #ccc; background: #fff; color: #111; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <h1>Let's get <span>started.</span></h1>
+      <p>Fill this out and we'll have everything we need to start building. Don't stress about getting every answer perfect — just fill in what you know and we'll figure out the rest together.</p>
+      <div class="progress-hint">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        Takes about 5–10 minutes. Some sections may not apply to you — skip those.
+      </div>
+    </div>
+
+    <form id="onboarding-form">
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 1: Business Info + Contact -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">1</div>
+        <div class="section-title">Your Business</div>
+      </div>
+
+      <div class="field">
+        <label>Business name <span class="required">*</span></label>
+        <input type="text" name="business_name" placeholder="e.g. Soak N Wet" required>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Your name <span class="required">*</span></label>
+          <input type="text" name="contact_name" placeholder="Full name" required>
+        </div>
+        <div class="field">
+          <label>Role</label>
+          <input type="text" name="role" placeholder="e.g. Owner, Manager">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Email <span class="required">*</span></label>
+          <input type="email" name="email" placeholder="you@business.com" required>
+        </div>
+        <div class="field">
+          <label>Phone <span class="required">*</span></label>
+          <input type="tel" name="phone" placeholder="(555) 000-0000" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Industry / niche <span class="required">*</span>
+          <span class="hint">e.g. Restaurant, Plumbing, Real Estate, Fitness, etc.</span>
+        </label>
+        <input type="text" name="industry" placeholder="What does your business do?" required>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Location
+            <span class="hint">City + province/state is fine</span>
+          </label>
+          <input type="text" name="location" placeholder="e.g. Ottawa, ON">
+        </div>
+        <div class="field">
+          <label>Service area
+            <span class="hint">Leave blank if in-store only</span>
+          </label>
+          <input type="text" name="service_area" placeholder="e.g. Greater Ottawa area">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Preferred way to communicate</label>
+        <div class="radio-group horizontal">
+          <label class="radio-item"><input type="radio" name="preferred_contact" value="Text"><span>Text</span></label>
+          <label class="radio-item"><input type="radio" name="preferred_contact" value="Email"><span>Email</span></label>
+          <label class="radio-item"><input type="radio" name="preferred_contact" value="Phone"><span>Phone</span></label>
+          <label class="radio-item"><input type="radio" name="preferred_contact" value="WhatsApp"><span>WhatsApp</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Social media links
+          <span class="hint">Instagram, Facebook, TikTok, etc. — paste whatever you have</span>
+        </label>
+        <textarea name="socials" rows="2" placeholder="e.g. instagram.com/yourbiz, facebook.com/yourbiz"></textarea>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 2: What are we doing? -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">2</div>
+        <div class="section-title">What We're Doing</div>
+      </div>
+
+      <div class="field">
+        <label>Which services are you signing up for? <span class="required">*</span></label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" name="services" value="Website build (new site)"><span>Website build (new site)</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="services" value="Website redesign"><span>Website redesign (replacing existing site)</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="services" value="Google Business Profile optimization"><span>Google Business Profile optimization</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="services" value="Google Reviews automation"><span>Google Reviews automation</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="services" value="Monthly retainer"><span>Monthly retainer (ongoing updates + management)</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="services" value="Other"><span>Other</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>What's the #1 thing you want this project to achieve? <span class="required">*</span>
+          <span class="hint">e.g. "Get more calls", "Look more professional", "Show up on Google", "Sell online"</span>
+        </label>
+        <textarea name="primary_goal" rows="2" placeholder="What does success look like for you?" required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Any deadline or event driving the timeline?
+          <span class="hint">e.g. Grand opening May 15, seasonal rush, rebrand launch</span>
+        </label>
+        <input type="text" name="deadline" placeholder="e.g. Need site live by May 10">
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 3: Domain -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">3</div>
+        <div class="section-title">Domain & Current Site</div>
+      </div>
+
+      <div class="field">
+        <label>Do you own a domain? <span class="required">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="has_domain" value="Yes" required><span>Yes</span></label>
+          <label class="radio-item"><input type="radio" name="has_domain" value="No — I need one"><span>No — I need one</span></label>
+          <label class="radio-item"><input type="radio" name="has_domain" value="Not sure"><span>Not sure</span></label>
+        </div>
+      </div>
+
+      <div class="conditional-section">
+        <span class="label-tag">If yes</span>
+        <div class="field-row">
+          <div class="field">
+            <label>Domain</label>
+            <input type="text" name="domain_name" placeholder="e.g. yourbusiness.com">
+          </div>
+          <div class="field">
+            <label>Registered where?
+              <span class="hint">"I don't know" is fine</span>
+            </label>
+            <input type="text" name="registrar" placeholder="e.g. GoDaddy, Namecheap">
+          </div>
+        </div>
+      </div>
+
+      <div class="conditional-section" style="margin-top: 10px;">
+        <span class="label-tag">If you need one</span>
+        <div class="field">
+          <label>Any domain preferences?</label>
+          <input type="text" name="domain_preference" placeholder="e.g. soaknwet.ca — we'll check availability">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field-row">
+        <div class="field">
+          <label>Existing website URL</label>
+          <input type="url" name="current_site" placeholder="https://... or leave blank">
+        </div>
+        <div class="field">
+          <label>Built with?
+            <span class="hint">e.g. Wix, Squarespace, WordPress</span>
+          </label>
+          <input type="text" name="current_platform" placeholder="e.g. Wix">
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 4: Branding & Style -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">4</div>
+        <div class="section-title">Branding & Style</div>
+      </div>
+
+      <div class="field">
+        <label>Logo status <span class="required">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="logo_status" value="I have one — I'll send it" required><span>I have one — I'll send it</span></label>
+          <label class="radio-item"><input type="radio" name="logo_status" value="Needs a refresh"><span>I have one but it needs a refresh</span></label>
+          <label class="radio-item"><input type="radio" name="logo_status" value="Don't have one"><span>I don't have one</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Brand colors
+          <span class="hint">Hex codes, color names, or "pick something for me"</span>
+        </label>
+        <input type="text" name="brand_colors" placeholder="e.g. Dark blue and gold, or #1a2b4c">
+      </div>
+
+      <div class="field">
+        <label>Photos</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="photos" value="Professional photos"><span>I have professional photos to send</span></label>
+          <label class="radio-item"><input type="radio" name="photos" value="Some but not enough"><span>I have some, but not enough</span></label>
+          <label class="radio-item"><input type="radio" name="photos" value="Use stock photos"><span>Use stock photos for now</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Websites you like the look of
+          <span class="hint">Any industry — just sites whose vibe or layout you'd want yours to feel like</span>
+        </label>
+        <textarea name="reference_sites" rows="2" placeholder="Paste URLs or just describe what you like..."></textarea>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 5: Website Details -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">5</div>
+        <div class="section-title">Website Details</div>
+      </div>
+      <p class="section-desc">Skip this section if you're only signing up for Google services.</p>
+
+      <div class="field">
+        <label>Which pages do you need? <span class="required">*</span></label>
+        <div class="tag-group">
+          <label class="tag-item"><input type="checkbox" name="pages" value="Home"><span>Home</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="About"><span>About</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Services"><span>Services</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Contact"><span>Contact</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Gallery"><span>Gallery</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Menu"><span>Menu</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Pricing"><span>Pricing</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Booking"><span>Booking</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Blog"><span>Blog</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="FAQ"><span>FAQ</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Reviews"><span>Reviews</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Shop"><span>Shop</span></label>
+          <label class="tag-item"><input type="checkbox" name="pages" value="Other"><span>Other</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Do you have written content for the site?</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="content_status" value="Yes — I'll send it"><span>Yes — I'll send it</span></label>
+          <label class="radio-item"><input type="radio" name="content_status" value="Some, need help"><span>Some, but I need help</span></label>
+          <label class="radio-item"><input type="radio" name="content_status" value="No — write it for me"><span>No — write it for me</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>List your main services or products
+          <span class="hint">Quick list — we'll flesh it out together</span>
+        </label>
+        <textarea name="services_list" rows="3" placeholder="e.g.&#10;- Bulk water delivery (residential)&#10;- Pool filling&#10;- Hot tub filling"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Show pricing on the site?</label>
+        <div class="radio-group horizontal">
+          <label class="radio-item"><input type="radio" name="pricing_display" value="Full prices"><span>Yes, full prices</span></label>
+          <label class="radio-item"><input type="radio" name="pricing_display" value="Starting at only"><span>"Starting at" only</span></label>
+          <label class="radio-item"><input type="radio" name="pricing_display" value="Contact for quote"><span>No — "contact for quote"</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Special features</label>
+        <div class="tag-group">
+          <label class="tag-item"><input type="checkbox" name="special_features" value="Contact form"><span>Contact form</span></label>
+          <label class="tag-item"><input type="checkbox" name="special_features" value="Online booking"><span>Online booking</span></label>
+          <label class="tag-item"><input type="checkbox" name="special_features" value="E-commerce"><span>E-commerce</span></label>
+          <label class="tag-item"><input type="checkbox" name="special_features" value="Newsletter signup"><span>Newsletter signup</span></label>
+          <label class="tag-item"><input type="checkbox" name="special_features" value="Google Maps"><span>Google Maps</span></label>
+          <label class="tag-item"><input type="checkbox" name="special_features" value="Live chat"><span>Live chat</span></label>
+          <label class="tag-item"><input type="checkbox" name="special_features" value="Other"><span>Other</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- SECTION 6: Google Profile & Reviews -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-number">6</div>
+        <div class="section-title">Google Profile & Reviews</div>
+      </div>
+      <p class="section-desc">Skip this if you're only signing up for a website build.</p>
+
+      <div class="field">
+        <label>Google Business Profile status <span class="required">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="gbp_status" value="Set up and verified"><span>Set up and verified</span></label>
+          <label class="radio-item"><input type="radio" name="gbp_status" value="Exists but outdated"><span>Exists but outdated / not optimized</span></label>
+          <label class="radio-item"><input type="radio" name="gbp_status" value="Don't have one"><span>Don't have one</span></label>
+          <label class="radio-item"><input type="radio" name="gbp_status" value="Not sure"><span>Not sure</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Can you access the Google account tied to it?</label>
+        <div class="radio-group horizontal">
+          <label class="radio-item"><input type="radio" name="google_access" value="Yes"><span>Yes</span></label>
+          <label class="radio-item"><input type="radio" name="google_access" value="No"><span>No</span></label>
+          <label class="radio-item"><input type="radio" name="google_access" value="Not sure"><span>Not sure</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Reviews situation</label>
+        <div class="radio-group">
+          <label class="radio-item"><input type="radio" name="reviews_status" value="Plenty of reviews"><span>Plenty of reviews</span></label>
+          <label class="radio-item"><input type="radio" name="reviews_status" value="Some, want more"><span>Some, but want more</span></label>
+          <label class="radio-item"><input type="radio" name="reviews_status" value="Very few or none"><span>Very few or none</span></label>
+          <label class="radio-item"><input type="radio" name="reviews_status" value="Have negative reviews"><span>Have negative reviews to deal with</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- Final open-ended -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="section" style="border-color: rgba(99, 102, 241, 0.15); background: linear-gradient(135deg, #14141a 0%, #16141f 100%);">
+      <div class="field">
+        <label style="color: #f4f4f5; font-size: 15px;">Anything else we should know?
+          <span class="hint">Competitors you want to beat, things a previous agency got wrong, special requests — anything goes.</span>
+        </label>
+        <textarea name="additional_notes" rows="3" placeholder="Anything else on your mind..."></textarea>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- Submit -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="submit-section">
+      <button type="submit" class="submit-btn" id="submit-btn">
+        <span class="btn-text">Submit</span>
+        <span class="spinner"></span>
+      </button>
+      <div id="form-message" class="form-message"></div>
+    </div>
+
+    </form>
+
+    <!-- Footer -->
+    <div class="footer">
+      ScreenSite Agency — Client Onboarding (v2)
+    </div>
+
+  </div>
+
+  <script>
+    const form = document.getElementById('onboarding-form');
+    const btn = document.getElementById('submit-btn');
+    const msg = document.getElementById('form-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Collect all form data
+      const data = {};
+
+      // Text / email / tel / url inputs
+      form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="url"]').forEach(input => {
+        if (input.name && input.value.trim()) {
+          data[input.name] = input.value.trim();
+        }
+      });
+
+      // Textareas
+      form.querySelectorAll('textarea').forEach(textarea => {
+        if (textarea.name && textarea.value.trim()) {
+          data[textarea.name] = textarea.value.trim();
+        }
+      });
+
+      // Radio buttons (single select)
+      form.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+        if (radio.name) {
+          data[radio.name] = radio.value;
+        }
+      });
+
+      // Checkboxes (multi-select → comma-separated string)
+      const checkboxGroups = {};
+      form.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+        if (cb.name) {
+          if (!checkboxGroups[cb.name]) checkboxGroups[cb.name] = [];
+          checkboxGroups[cb.name].push(cb.value);
+        }
+      });
+      for (const [key, values] of Object.entries(checkboxGroups)) {
+        data[key] = values.join(', ');
+      }
+
+      // Validate required fields
+      if (!data.business_name || !data.contact_name || !data.email) {
+        showMessage('Please fill in the required fields: Business name, Your name, and Email.', 'error');
+        return;
+      }
+
+      // Submit
+      btn.classList.add('loading');
+      btn.disabled = true;
+      msg.className = 'form-message';
+      msg.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+
+        if (res.ok && result.success) {
+          showMessage("You're all set! We've got your info and we'll be in touch soon.", 'success');
+          form.reset();
+        } else {
+          showMessage(result.error || 'Something went wrong. Please try again.', 'error');
+        }
+      } catch (err) {
+        showMessage('Network error — please check your connection and try again.', 'error');
+      } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+    });
+
+    function showMessage(text, type) {
+      msg.textContent = text;
+      msg.className = 'form-message ' + type;
+      msg.style.display = 'block';
+      msg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>
