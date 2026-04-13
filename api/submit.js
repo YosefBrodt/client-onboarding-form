@@ -43,15 +43,20 @@ export default async function handler(req, res) {
       content: Buffer.from(brief).toString("base64"),
     });
 
-    // 2. Send email notification
+    // 2. Send email notification (non-fatal — form always succeeds even if email fails)
     if (process.env.RESEND_API_KEY) {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-      await resend.emails.send({
-        from: "Onboarding <onboarding@screensite.agency>",
-        to: "brodt.yosef@gmail.com",
-        subject: `New Client Intake: ${data.business_name}`,
-        text: `New onboarding form submitted by ${data.contact_name} (${data.business_name}).\n\nCheck your Obsidian vault or GitHub: https://github.com/${owner}/${repo}\n\n---\n\n${brief}`,
-      });
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        await resend.emails.send({
+          from: "Onboarding <onboarding@resend.dev>",
+          to: "brodt.yosef@gmail.com",
+          subject: `New Client Intake: ${data.business_name}`,
+          text: `New onboarding form submitted by ${data.contact_name} (${data.business_name}).\n\nCheck your Obsidian vault or GitHub: https://github.com/${owner}/${repo}\n\n---\n\n${brief}`,
+        });
+      } catch (emailErr) {
+        // Email failure is non-fatal — log it but don't block the response
+        console.error("Email send failed:", emailErr.message);
+      }
     }
 
     return res.status(200).json({ success: true, filename });
