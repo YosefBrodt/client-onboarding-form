@@ -23,12 +23,15 @@ export default async function handler(req, res) {
 
     // Format the markdown client brief
     const brief = formatBrief(data);
-    const timestamp = new Date().toISOString().split("T")[0];
+    // Date for human readability + time for guaranteed uniqueness (prevents filename collisions on duplicate submissions)
+    const now = new Date().toISOString();
+    const date = now.split("T")[0];
+    const time = now.split("T")[1].replace(/[:.]/g, "-").replace("Z", "");
     const slug = data.business_name
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "");
-    const filename = `${slug}-${timestamp}.md`;
+    const filename = `${slug}-${date}-${time}.md`;
 
     // 1. Create .md file in GitHub repo
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
