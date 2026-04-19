@@ -52,7 +52,7 @@ export default async function handler(req, res) {
         const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
           from: "Onboarding <onboarding@resend.dev>",
-          to: "brodt.yosef@gmail.com",
+          to: "joseph@kollaborate.ca",
           subject: `New Client Intake: ${data.business_name}`,
           text: `New onboarding form submitted by ${data.contact_name} (${data.business_name}).\n\nCheck your Obsidian vault or GitHub: https://github.com/${owner}/${repo}\n\n---\n\n${brief}`,
         });
